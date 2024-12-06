@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML Simulator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+        }
+        #simulator {
+            width: 240px;
+            height: 200px;
+            border: 2px solid #000;
+            overflow: auto;
+            background-color: white;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        textarea {
+            width: 100%;
+            height: 50px;
+            box-sizing: border-box;
+            resize: none;
+        }
+        iframe {
+            width: 100%;
+            height: calc(100% - 50px);
+            border: none;
+        }
+        .fullscreen {
+            width: 540px;
+            height: 500px;
+        }
+        .easter-egg {
+            animation: spin 2s infinite linear;
+        }
+        .color-change {
+            background-color: yellow;
+        }
+        .shake {
+            animation: shake 0.5s ease-in-out;
+        }
+        @keyframes shake {
+            0%, 100% {
+                transform: translateX(0);
+            }
+            25% {
+                transform: translateX(-5px);
+            }
+            75% {
+                transform: translateX(5px);
+            }
+        }
+        @keyframes spin {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="simulator">
+        <textarea id="htmlInput" placeholder="Type HTML here..."></textarea>
+        <iframe id="preview"></iframe>
+    </div>
+
+    <script>
+        const htmlInput = document.getElementById('htmlInput');
+        const preview = document.getElementById('preview');
+        const simulator = document.getElementById('simulator');
+
+        htmlInput.addEventListener('input', () => {
+            const content = htmlInput.value.trim();
+            preview.srcdoc = content;
+
+            // Easter egg: Type "spin" to make the simulator spin
+            if (content === 'spin') {
+                simulator.classList.add('easter-egg');
+                setTimeout(() => {
+                    simulator.classList.remove('easter-egg');
+                }, 5000); // Spins for 5 seconds
+            }
+
+            // Easter egg: Type "color" to change background color
+            if (content === 'color') {
+                simulator.classList.add('color-change');
+                setTimeout(() => {
+                    simulator.classList.remove('color-change');
+                }, 3000); // Changes color for 3 seconds
+            }
+
+            // Easter egg: Type "shake" to make the simulator shake
+            if (content === 'shake') {
+                simulator.classList.add('shake');
+                setTimeout(() => {
+                    simulator.classList.remove('shake');
+                }, 500); // Shakes for 0.5 seconds
+            }
+
+            // Easter egg: Type "grow" to increase size temporarily
+            if (content === 'grow') {
+                simulator.style.transform = 'scale(1.5)';
+                setTimeout(() => {
+                    simulator.style.transform = 'scale(1)';
+                }, 3000); // Grows for 3 seconds
+            }
+
+            // Easter egg: Type "glow" to add a glowing effect
+            if (content === 'glow') {
+                simulator.style.boxShadow = '0 0 15px 5px rgba(0, 255, 0, 0.7)';
+                setTimeout(() => {
+                    simulator.style.boxShadow = 'none';
+                }, 3000); // Glows for 3 seconds
+            }
+        });
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'f' || event.key === 'F') {
+                simulator.classList.toggle('fullscreen');
+            }
+        });
+    </script>
+</body>
+</html>
